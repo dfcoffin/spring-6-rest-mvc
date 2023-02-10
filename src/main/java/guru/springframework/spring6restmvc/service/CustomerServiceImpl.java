@@ -52,10 +52,15 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	public void deleteCustomerById(UUID customerId) {
+		customerMap.remove(customerId);
+	}
+	@Override
 	public void updateCustomerById(UUID customerId, Customer customer) {
 		Customer existing = customerMap.get(customerId);
 		existing.setName(customer.getName());
 	}
+
 	@Override
 	public Customer getCustomerById(UUID id) {
 		return customerMap.get(id);

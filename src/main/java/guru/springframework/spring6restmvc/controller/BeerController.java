@@ -31,7 +31,7 @@ public class BeerController {
 	private final BeerService beerService;
 
 	@DeleteMapping("{beerId}")
-	public ResponseEntity deleteBeerId(@PathVariable("beerId") UUID beerId) {
+	public ResponseEntity deleteById(@PathVariable("beerId") UUID beerId) {
 
 		beerService.deleteById(beerId);
 
