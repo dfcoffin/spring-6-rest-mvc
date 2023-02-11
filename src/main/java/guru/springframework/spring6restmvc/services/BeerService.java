@@ -1,16 +1,13 @@
-package guru.springframework.spring6restmvc.service;
+package guru.springframework.spring6restmvc.services;
 
 import guru.springframework.spring6restmvc.model.Beer;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * @author Donald F. Coffin
  */
-@Service
 public interface BeerService {
 
 	List<Beer> listBeers();
@@ -23,5 +20,5 @@ public interface BeerService {
 
 	void deleteById(UUID beerId);
 
-	void updateBeerPatchById(UUID beerId, Beer beer);
+	void patchBeerById(UUID beerId, Beer beer);
 }

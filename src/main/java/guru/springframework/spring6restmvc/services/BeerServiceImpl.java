@@ -1,4 +1,4 @@
-package guru.springframework.spring6restmvc.service;
+package guru.springframework.spring6restmvc.services;
 
 import guru.springframework.spring6restmvc.model.Beer;
 import guru.springframework.spring6restmvc.model.BeerStyle;
@@ -68,7 +68,7 @@ public class BeerServiceImpl implements BeerService {
 	}
 
 	@Override
-	public void updateBeerPatchById(UUID beerId, Beer beer) {
+	public void patchBeerById(UUID beerId, Beer beer) {
 		Beer existing = beerMap.get(beerId);
 
 		if (StringUtils.hasText(beer.getBeerName())) {
