@@ -1,6 +1,7 @@
 package guru.springframework.spring6restmvc.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import guru.springframework.spring6restmvc.model.Beer;
 import guru.springframework.spring6restmvc.model.Customer;
 import guru.springframework.spring6restmvc.services.CustomerService;
 import guru.springframework.spring6restmvc.services.CustomerServiceImpl;
@@ -12,9 +13,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.UUID;
+
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,7 +46,20 @@ class CustomerControllerTest {
 	}
 
 	@Test
-	void testCreateNewCustomer() throws Exception {
+	void testUpdateCustomer() throws Exception {
+		Customer customer = customerServiceImpl.getAllCustomers().get(0);
+
+		mockMvc.perform(put("/api/v1/customer/" + customer.getId())
+				.content(objectMapper.writeValueAsString(customer))
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNoContent());
+
+		verify(customerService).updateCustomerById(any(UUID.class), any(Customer.class));
+	}
+
+	@Test
+	void testCreateCustomer() throws Exception {
 		Customer customer = customerServiceImpl.getAllCustomers().get(0);
 		customer.setId(null);
 		customer.setVersion(null);
