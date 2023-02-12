@@ -14,14 +14,17 @@ import java.util.UUID;
 /**
  * @author Donald F. Coffin
  */
-@RequestMapping("/api/v1/customer")
+
 @RequiredArgsConstructor
 @RestController
 public class CustomerController {
 
+	public static final String CUSTOMER_PATH = "/api/v1/customer";
+	public static final String CUSTOMER_PATH_ID = CUSTOMER_PATH + "/{customerId}";
+
 	private final CustomerService customerService;
 
-	@PatchMapping("{customerId}")
+	@PatchMapping(CUSTOMER_PATH_ID)
 	public ResponseEntity patchCustomerById(@PathVariable("customerId") UUID customerId,
 											@RequestBody Customer customer) {
 
@@ -30,7 +33,7 @@ public class CustomerController {
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
-	@DeleteMapping("{customerId}")
+	@DeleteMapping(CUSTOMER_PATH_ID)
 	public ResponseEntity deleteCustomerById(@PathVariable("customerId") UUID customerId) {
 
 		customerService.deleteCustomerById(customerId);
@@ -38,7 +41,7 @@ public class CustomerController {
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
-	@PutMapping("{customerId}")
+	@PutMapping(CUSTOMER_PATH_ID)
 	public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId,
 											 @RequestBody Customer customer) {
 
@@ -47,7 +50,7 @@ public class CustomerController {
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
-	@PostMapping
+	@PostMapping(CUSTOMER_PATH)
 	public ResponseEntity handlePost(@RequestBody Customer customer) {
 		Customer savedCustomer = customerService.saveNewCustomer(customer);
 
@@ -57,12 +60,12 @@ public class CustomerController {
 		return new ResponseEntity(headers, HttpStatus.CREATED);
 	}
 
-	@GetMapping
+	@GetMapping(CUSTOMER_PATH)
 	public List<Customer> listAllCustomers() {
 		return customerService.getAllCustomers();
 	}
 
-	@GetMapping("/{customerId}")
+	@GetMapping(CUSTOMER_PATH_ID)
 	public Customer getCustomerById(@PathVariable("customerId") UUID id) {
 		return customerService.getCustomerById(id);
 	}
