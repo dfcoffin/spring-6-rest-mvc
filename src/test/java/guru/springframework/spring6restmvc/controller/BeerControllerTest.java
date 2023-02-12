@@ -74,7 +74,6 @@ class BeerControllerTest {
 
 		assertThat(beer.getId()).isEqualTo(uuidArgumentCaptor.getValue());
 		assertThat(beerMap.get("beerName")).isEqualTo(beerArgumentCaptor.getValue().getBeerName());
-
 	}
 
 	@Test
