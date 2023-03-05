@@ -7,11 +7,11 @@ import guru.springframework.spring6restmvc.model.BeerStyle;
 import guru.springframework.spring6restmvc.repositories.BeerRepository;
 import guru.springframework.spring6restmvc.repositories.CustomerRepository;
 import guru.springframework.spring6restmvc.services.BeerCsvService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Donald F. Coffin
@@ -31,6 +32,7 @@ public class BootstrapData implements CommandLineRunner {
 	private final BeerRepository beerRepository;
 	private final CustomerRepository customerRepository;
 	private final BeerCsvService beerCsvService;
+
 @Transactional
 	@Override
 	public void run(String... args) throws Exception {
@@ -107,20 +109,27 @@ public class BootstrapData implements CommandLineRunner {
 	}
 
 	private void loadCustomerData() {
+
 		if (customerRepository.count() == 0) {
 			Customer customer1 = Customer.builder()
+                    .id(UUID.randomUUID())
+                    .name("Customer 1")
 					.version(1)
 					.createdDate(LocalDateTime.now())
 					.updateDate(LocalDateTime.now())
 					.build();
 
 			Customer customer2 = Customer.builder()
+                    .id(UUID.randomUUID())
+                    .name("Customer 2")
 					.version(1)
 					.createdDate(LocalDateTime.now())
 					.updateDate(LocalDateTime.now())
 					.build();
 
 			Customer customer3 = Customer.builder()
+                    .id(UUID.randomUUID())
+                    .name("Customer 3")
 					.version(1)
 					.createdDate(LocalDateTime.now())
 					.updateDate(LocalDateTime.now())
