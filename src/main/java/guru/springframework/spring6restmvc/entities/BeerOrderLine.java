@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +36,7 @@ public class BeerOrderLine {
 	)
 	@JdbcTypeCode(SqlTypes.CHAR)
 	@Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
-	private UUID id;
+	private UUID Id;
 
 	@Version
 	private Long version;
@@ -48,8 +49,14 @@ public class BeerOrderLine {
 	private Timestamp lastModifiedDate;
 
 	public Boolean isNew() {
-		return this.id == null;
+		return this.Id == null;
 	}
+
+	@ManyToOne
+	private BeerOrder beerOrder;
+
+	@ManyToOne
+	private Beer beer;
 
 	private Integer orderQuantity = 0;
 	private Integer quantityAllocated = 0;
