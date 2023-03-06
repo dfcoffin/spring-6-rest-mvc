@@ -1,17 +1,7 @@
 package guru.springframework.spring6restmvc.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Version;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -19,9 +9,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,7 +21,7 @@ import java.util.UUID;
 @Entity
 public class Category {
 
-	@jakarta.persistence.Id
+    @Id
 	@GeneratedValue(generator = "UUID")
 	@GenericGenerator(
 			name = "UUID",
@@ -37,7 +29,7 @@ public class Category {
 	)
 	@JdbcTypeCode(SqlTypes.CHAR)
 	@Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
-	private UUID Id;
+    private UUID id;
 
 	@Version
 	private Long version;
@@ -51,9 +43,10 @@ public class Category {
 
 	private String description;
 
+	@Builder.Default
 	@ManyToMany
 	@JoinTable(name = "beer_category",
 		joinColumns = @JoinColumn(name = "category_id"),
 		inverseJoinColumns = @JoinColumn(name = "beer_id"))
-	private Set<Beer> beers;
+	private Set<Beer> beers = new HashSet<>();
 }
